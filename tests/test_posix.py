@@ -85,7 +85,7 @@ def test_sigint_pause():
         try:
             await asyncio.sleep(5.0)
         except asyncio.CancelledError:
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.3)
             items.append(True)
 
     # The first sigint triggers shutdown mode, so all tasks are cancelled.
@@ -94,7 +94,7 @@ def test_sigint_pause():
     kill(SIGINT, after=0.1)
     # The second sigint should have no effect, because aiorun signal
     # handler disables itself after the first sigint received, above.
-    kill(SIGINT, after=0.3)
+    kill(SIGINT, after=0.2)
     run(main())
     assert len(items) == 1  # Verify that main() ran till completion.
 
